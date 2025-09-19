@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: 
+      context: guild-quest-tracker/
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATASOURCE_DDL_AUTO: create-drop
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - '8080:8080'
+    networks:
+      - 'guild-quest-tracker'
+
+  database:
+    image: postgres
+    container_name: postgres
+    ports:
+      - '5433:5433'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - guild-quest-tracker
+
+volumes:
+  postgres-data:
+
+networks:
+  guild-quest-tracker:
+    driver: bridge
