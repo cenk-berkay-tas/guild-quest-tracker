@@ -1,7 +1,11 @@
 package com.cenktas.guild_quest_tracker.player;
 
-import lombok.RequiredArgsConstructor;
+import com.cenktas.guild_quest_tracker.player.exception.PlayerNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
 @Service
 public class PlayerService {
@@ -10,11 +14,25 @@ public class PlayerService {
     public PlayerService(PlayerRepository ps) {
         this.playerRepository = ps;
     }
-    public Player save(Player p) {
-        return playerRepository.save(p);
+    public PlayerResponse save(PlayerRequest pr) {
+        Player p = new Player(pr);
+        playerRepository.save(p);
+        return new PlayerResponse(p);
     }
 
-    public Iterable<Player> getAll() {
-        return playerRepository.findAll();
+    public List<PlayerResponse> getAll() {
+        List<Player> players = playerRepository.findAll();
+        return players.stream().map(PlayerResponse::new).toList();
+    }
+
+    public PlayerResponse findById(int id) {
+        Player p = playerRepository.findById(id).orElseThrow(PlayerNotFoundException::new);
+        return new PlayerResponse(p);
+    }
+
+    public void delete(int id) {
+        Player p = playerRepository.findById(id).orElseThrow(PlayerNotFoundException::new);
+        p.setActive(false);
+        playerRepository.save(p);
     }
 }
