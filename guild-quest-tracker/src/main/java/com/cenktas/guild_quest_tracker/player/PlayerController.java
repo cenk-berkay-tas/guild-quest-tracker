@@ -18,8 +18,8 @@ public class PlayerController {
     }
 
     @PostMapping()
-    public ResponseEntity<PlayerResponse> save(@RequestBody PlayerRequest pr) {
-        return new ResponseEntity<PlayerResponse>(playerService.save(pr), HttpStatus.CREATED);
+    public ResponseEntity<PlayerResponse> save(@RequestBody PlayerRequest request) {
+        return new ResponseEntity<PlayerResponse>(playerService.save(request), HttpStatus.CREATED);
     }
 
     @GetMapping()
@@ -27,14 +27,14 @@ public class PlayerController {
         return new ResponseEntity<Iterable<PlayerResponse>>(playerService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{playerId}")
-    public ResponseEntity<PlayerResponse> findById(@PathVariable int playerId) {
-        return new ResponseEntity<PlayerResponse>(playerService.findById(playerId), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<PlayerResponse> findById(@PathVariable int id) {
+        return new ResponseEntity<PlayerResponse>(playerService.findById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{playerId}")
-    public void delete(@PathVariable int playerId) {
-        playerService.delete(playerId);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        playerService.delete(id);
     }
 
 }

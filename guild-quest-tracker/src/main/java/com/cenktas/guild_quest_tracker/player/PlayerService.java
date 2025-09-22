@@ -14,8 +14,8 @@ public class PlayerService {
     public PlayerService(PlayerRepository ps) {
         this.playerRepository = ps;
     }
-    public PlayerResponse save(PlayerRequest pr) {
-        Player p = new Player(pr);
+    public PlayerResponse save(PlayerRequest request) {
+        Player p = new Player(request);
         playerRepository.save(p);
         return new PlayerResponse(p);
     }

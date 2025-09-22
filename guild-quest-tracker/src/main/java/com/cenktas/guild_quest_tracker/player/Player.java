@@ -5,8 +5,8 @@ import lombok.*;
 
 @Entity
 @RequiredArgsConstructor
+@Table(name = "player")
 public class Player {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "player_id")
